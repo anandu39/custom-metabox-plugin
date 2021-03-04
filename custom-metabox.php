@@ -8,14 +8,14 @@
  */
 
 
-function add_custom_meta_box()
+function add_custom_meta_box()  //to create a custom metabox.
 {
     add_meta_box("demo-meta-box", "Custom Meta Box", "custom_meta_box_markup", null, "side", "high", null);
 }
 
 add_action("add_meta_boxes", "add_custom_meta_box");
 
-function custom_meta_box_markup($object)
+function custom_meta_box_markup($object) //to create the fields and contents needed in the custom metabox created.
 {
     wp_nonce_field(basename(__FILE__), "meta-box-nonce");
     $post_id= $object->ID;
@@ -52,6 +52,7 @@ add_action("save_post", "save_custom_meta_box", 10, 2);
 
 function save_custom_meta_box($post_id, $post)
 {
+	//to save the contents entered in the custom metabox to the  database
     if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
         return $post_id;
 
@@ -81,6 +82,7 @@ function save_custom_meta_box($post_id, $post)
     update_post_meta($post_id, "meta-box-checkbox", $meta_box_checkbox_value);
 }
 function display_post( $content ) {
+	//to display the contents on the frontend
 
     global $post;
 
